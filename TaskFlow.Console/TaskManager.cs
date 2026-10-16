@@ -15,23 +15,18 @@ public class TaskManager
 
     public TaskItem? GetById(Guid id)
     {
-        // Versao inicial que lanca excecao quando o ID nao existe
-        var task = _tasks.FirstOrDefault(t => t.Id == id);
-        return task ?? throw new KeyNotFoundException("Tarefa nao encontrada.");
+        return _tasks.FirstOrDefault(t => t.Id == id);
     }
 
     public bool CompleteTask(Guid id)
     {
-        try
-        {
-            var task = GetById(id);
-            if (task == null) return false;
-            task.Complete();
-            return true;
-        }
-        catch (KeyNotFoundException)
+        var task = GetById(id);
+        if (task == null)
         {
             return false;
         }
+
+        task.Complete();
+        return true;
     }
 }
